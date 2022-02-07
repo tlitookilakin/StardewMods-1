@@ -2,6 +2,7 @@
 
 # Release notes
 ## Upcoming release
+* Updated for Stardew Valley 1.6.
 * Fixed dropdown options not selectable when gamepad mode is enabled.
 * Optimized legacy save migration a bit (thanks to Michael Kuklinski / Ameisen!).
 * Improved translations. Thanks to EmWhyKay (updated Turkish), wally232 (updated Korean), and ZijieFeng (updated Chinese)!
