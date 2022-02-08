@@ -592,13 +592,16 @@ namespace Pathoschild.Stardew.LookupAnything
                     return data;
             }
 
-            if (onlyCustom)
-                return null;
-
             // standard item
-            Texture2D texture = Utility.GetTextureForItemID(item.QualifiedItemID);
-            Rectangle sourceRect = Utility.GetSourceRectForItemID(item.QualifiedItemID);
-            return new SpriteInfo(texture, sourceRect);
+            if (!onlyCustom && item is not null)
+            {
+                Texture2D texture = Utility.GetTextureForItemID(item.QualifiedItemID);
+                Rectangle sourceRect = Utility.GetSourceRectForItemID(item.QualifiedItemID);
+                return new SpriteInfo(texture, sourceRect);
+            }
+
+            // unknown
+            return null;
         }
 
 
