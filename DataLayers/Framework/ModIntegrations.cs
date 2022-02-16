@@ -5,6 +5,7 @@ using Pathoschild.Stardew.Common.Integrations.LineSprinklers;
 using Pathoschild.Stardew.Common.Integrations.MultiFertilizer;
 using Pathoschild.Stardew.Common.Integrations.PelicanFiber;
 using Pathoschild.Stardew.Common.Integrations.SimpleSprinkler;
+using Pathoschild.Stardew.Common.Integrations.BetterBeehouses;
 using StardewModdingAPI;
 
 namespace Pathoschild.Stardew.DataLayers.Framework
@@ -36,6 +37,9 @@ namespace Pathoschild.Stardew.DataLayers.Framework
         /// <summary>Handles access to the Simple Sprinkler mod.</summary>
         public SimpleSprinklerIntegration SimpleSprinkler { get; }
 
+        /// <summary>Handles access to the Better Neehouses mod.</summary>
+        public BetterBeehousesIntegration BetterBeehouses { get; }
+
 
         /*********
         ** Public methods
@@ -53,6 +57,7 @@ namespace Pathoschild.Stardew.DataLayers.Framework
             this.MultiFertilizer = new MultiFertilizerIntegration(modRegistry, monitor);
             this.PelicanFiber = new PelicanFiberIntegration(modRegistry, reflection, monitor);
             this.SimpleSprinkler = new SimpleSprinklerIntegration(modRegistry, monitor);
+            this.BetterBeehouses = new BetterBeehousesIntegration(modRegistry, monitor);
         }
     }
 }

@@ -11,6 +11,8 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Commands\BaseCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Commands\GenericCommandHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Integrations\BetterBeehouses\BetterBeehousesIntegration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Integrations\BetterBeehouses\IBetterBeehousesAPI.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Integrations\MultiFertilizer\MultiFertilizerIntegration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CollectionExtensions.cs" />
     <Compile Include="..\Common\Commands\GenericHelpCommand.cs" />

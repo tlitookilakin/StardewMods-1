@@ -107,7 +107,7 @@ namespace Pathoschild.Stardew.DataLayers
             if (layers.Buildable.IsEnabled())
                 yield return new BuildableLayer(layers.Buildable);
             if (layers.CoverageForBeeHouses.IsEnabled())
-                yield return new BeeHouseLayer(layers.CoverageForBeeHouses);
+                yield return new BeeHouseLayer(layers.CoverageForBeeHouses, mods);
             if (layers.CoverageForScarecrows.IsEnabled())
                 yield return new ScarecrowLayer(layers.CoverageForScarecrows);
             if (layers.CoverageForSprinklers.IsEnabled())

@@ -22,10 +22,13 @@ namespace Pathoschild.Stardew.DataLayers.Layers.Coverage
         private readonly Color SelectedColor = Color.Blue;
 
         /// <summary>The maximum number of tiles from the center a bee house can cover.</summary>
-        private readonly int MaxRadius = 5;
+        private readonly int MaxRadius;
 
         /// <summary>The relative tile coordinates covered by a bee house.</summary>
         private readonly Vector2[] RelativeRange;
+
+        /// <summary>Mod Integrations</summary>
+        private readonly ModIntegrations Mods;
 
 
         /*********
@@ -33,7 +36,7 @@ namespace Pathoschild.Stardew.DataLayers.Layers.Coverage
         *********/
         /// <summary>Construct an instance.</summary>
         /// <param name="config">The data layer settings.</param>
-        public BeeHouseLayer(LayerConfig config)
+        public BeeHouseLayer(LayerConfig config, ModIntegrations mods)
             : base(I18n.BeeHouses_Name(), config)
         {
             this.Legend = new[]
@@ -41,8 +44,11 @@ namespace Pathoschild.Stardew.DataLayers.Layers.Coverage
                 this.Covered = new LegendEntry(I18n.Keys.BeeHouses_Range, Color.Green)
             };
 
+            this.Mods = mods;
+            this.MaxRadius = this.Mods.BetterBeehouses.MaxRadius;
+
             this.RelativeRange = BeeHouseLayer
-                .GetRelativeCoverage()
+                .GetRelativeCoverage(this.MaxRadius)
                 .ToArray();
         }
 
@@ -111,7 +117,12 @@ namespace Pathoschild.Stardew.DataLayers.Layers.Coverage
         /// <remarks>Derived from <see cref="SObject.checkForAction"/> and <see cref="Utility.findCloseFlower(GameLocation, Vector2)"/>.</remarks>
         private IEnumerable<Vector2> GetCoverage(GameLocation location, Vector2 origin)
         {
-            if (!location.IsOutdoors)
+            if (!location.IsOutdoors &&
+                    !( // Better Beehouses allows working indoors sometimes
+                    this.Mods.BetterBeehouses.IsLoaded && 
+                    this.Mods.BetterBeehouses.CanProduceHere(location, false)
+                    )
+                )
                 yield break; // bee houses are hardcoded to only work outdoors
 
             foreach (Vector2 relativeTile in this.RelativeRange)
@@ -120,10 +131,8 @@ namespace Pathoschild.Stardew.DataLayers.Layers.Coverage
 
         /// <summary>Get the relative tiles covered by a bee house.</summary>
         /// <remarks>Derived from <see cref="Utility.findCloseFlower(GameLocation, Vector2)"/>.</remarks>
-        private static IEnumerable<Vector2> GetRelativeCoverage()
+        private static IEnumerable<Vector2> GetRelativeCoverage(int range)
         {
-            const int range = 5;
-
             Queue<Vector2> queue = new Queue<Vector2>();
             HashSet<Vector2> visited = new HashSet<Vector2>();
             queue.Enqueue(Vector2.Zero);
