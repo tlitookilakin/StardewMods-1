@@ -22,10 +22,10 @@ namespace Pathoschild.Stardew.DataLayers.Layers.Coverage
         private readonly Color SelectedColor = Color.Blue;
 
         /// <summary>The maximum number of tiles from the center a bee house can cover.</summary>
-        private readonly int MaxRadius;
+        private int MaxRadius;
 
         /// <summary>The relative tile coordinates covered by a bee house.</summary>
-        private readonly Vector2[] RelativeRange;
+        private Vector2[] RelativeRange;
 
         /// <summary>Mod Integrations</summary>
         private readonly ModIntegrations Mods;
@@ -59,6 +59,15 @@ namespace Pathoschild.Stardew.DataLayers.Layers.Coverage
         /// <param name="cursorTile">The tile position under the cursor.</param>
         public override TileGroup[] Update(GameLocation location, in Rectangle visibleArea, in Vector2[] visibleTiles, in Vector2 cursorTile)
         {
+            // check if range was changed and update it
+            if (this.Mods.BetterBeehouses.MaxRadius != this.MaxRadius)
+            {
+                this.MaxRadius = this.Mods.BetterBeehouses.MaxRadius;
+                this.RelativeRange = BeeHouseLayer
+                .GetRelativeCoverage(this.MaxRadius)
+                .ToArray();
+            }
+
             // get bee houses
             Vector2[] searchTiles = visibleArea.Expand(this.MaxRadius).GetTiles().ToArray();
             SObject[] beeHouses =

@@ -16,13 +16,10 @@ namespace Pathoschild.Stardew.Common.Integrations.BetterBeehouses
         ** Accessors
         *********/
         /// <summary>The Bee House coverage radius.</summary>
-        public int MaxRadius { get; }
-
-        /// <summary>The value multiplier for honey.</summary>
-        public float ValueMultiplier { get; }
+        public int MaxRadius => this.ModApi?.GetSearchRadius() ?? 5;
 
         /// <summary>How many days a bee house takes to produce.</summary>
-        public int DaysToProduce { get; }
+        public int DaysToProduce => this.ModApi?.GetDaysToProduce() ?? 4;
 
 
         /*********
@@ -40,9 +37,6 @@ namespace Pathoschild.Stardew.Common.Integrations.BetterBeehouses
             // get mod API
             this.ModApi = this.GetValidatedApi<IBetterBeehousesAPI>();
             this.IsLoaded = this.ModApi != null;
-            this.MaxRadius = this.ModApi?.GetSearchRadius() ?? 5;
-            this.DaysToProduce = this.ModApi?.GetDaysToProduce() ?? 4;
-            this.ValueMultiplier = this.ModApi?.GetValueMultiplier() ?? 1f;
         }
 
         /// <summary>Get if bee houses can produce in this location right now.</summary>
